@@ -69,7 +69,7 @@ class MTurkConnection(AWSQueryConnection):
         if approval_delay is not None:
             params['AutoApprovalDelayInSeconds']= approval_delay
 
-        return self._process_request('RegisterHITType', params)
+        return self._process_request('RegisterHITType', params, [('RegisterHITTypeResult', HITType)])
 
     def set_email_notification(self, hit_type, email, event_types=None):
         """
@@ -451,6 +451,13 @@ class BaseAutoResultElement:
 
     def endElement(self, name, value, connection):
         setattr(self, name, value)
+
+class HITType(BaseAutoResultElement):
+   """
+   Class to extract a HITType ID from response
+
+   Will have attribute named HitTypeId
+   """
 
 class HIT(BaseAutoResultElement):
     """
