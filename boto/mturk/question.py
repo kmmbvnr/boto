@@ -211,24 +211,24 @@ class FreeTextAnswer(object):
             min_length_attr = ""
             max_length_attr = ""
             if self.min_length:
-                min_length_attr = """minLength="%d" """
+                min_length_attr = """minLength="%d" """ % self.min_length
             if self.max_length:
-                max_length_attr = """maxLength="%d" """
+                max_length_attr = """maxLength="%d" """ % self.max_length
             length_xml = FreeTextAnswer.FREETEXTANSWER_LENGTH_XML_TEMPLATE % (min_length_attr, max_length_attr)
 
         regex_xml = ""
         if self.format_regex:
-            format_regex_attribs = '''regex="%s"''' %self.format_regex['regex']
+            format_regex_attribs = '''regex="%s"''' % self.format_regex['regex']
 
             error_text = self.format_regex.get('error_text', None)
             if error_text:
-                format_regex_attribs += ' errorText="%s"' %error_text
+                format_regex_attribs += ' errorText="%s"' % error_text
 
             flags = self.format_regex.get('flags', None)
             if flags:
-                format_regex_attribs += ' flags="%s"' %flags
+                format_regex_attribs += ' flags="%s"' % flags
 
-            regex_xml = """<AnswerFormatRegex %s/>""" %format_regex_attribs
+            regex_xml = """<AnswerFormatRegex %s/>""" % format_regex_attribs
             
         constraints_xml = ""
         if is_numeric_xml or length_xml or regex_xml:
