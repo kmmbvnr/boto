@@ -218,18 +218,17 @@ class FreeTextAnswer(object):
 
         regex_xml = ""
         for format_regex in self.format_regexps or []:
-            if self.format_regex:
-                format_regex_attribs = '''regex="%s"''' % format_regex['regex']
+            format_regex_attribs = '''regex="%s"''' % format_regex['regex']
 
-                error_text = format_regex.get('error_text', None)
-                if error_text:
-                    format_regex_attribs += ' errorText="%s"' % error_text
+            error_text = format_regex.get('error_text', None)
+            if error_text:
+                format_regex_attribs += ' errorText="%s"' % error_text
 
-                flags = format_regex.get('flags', None)
-                if flags:
-                    format_regex_attribs += ' flags="%s"' % flags
+            flags = format_regex.get('flags', None)
+            if flags:
+                format_regex_attribs += ' flags="%s"' % flags
 
-                regex_xml += """<AnswerFormatRegex %s/>""" % format_regex_attribs
+            regex_xml += """<AnswerFormatRegex %s/>""" % format_regex_attribs
             
         constraints_xml = ""
         if is_numeric_xml or length_xml or regex_xml:
