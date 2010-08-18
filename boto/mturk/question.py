@@ -186,14 +186,14 @@ class FreeTextAnswer(object):
     FREETEXTANSWER_ISNUMERIC_XML_TEMPLATE = """<IsNumeric %s %s />""" # (min_value_attr, max_value_attr)
     FREETEXTANSWER_DEFAULTTEXT_XML_TEMPLATE = """<DefaultText>%s</DefaultText>""" # (default)
     
-    def __init__(self, default=None, min_length=None, max_length=None, is_numeric=False, min_value=None, max_value=None, format_regex=None):
+    def __init__(self, default=None, min_length=None, max_length=None, is_numeric=False, min_value=None, max_value=None, format_regexps=None):
         self.default = default
         self.min_length = min_length
         self.max_length = max_length
         self.is_numeric = is_numeric
         self.min_value = min_value
         self.max_value = max_value
-        self.format_regex = format_regex
+        self.format_regexps = format_regexps
     
     def get_as_xml(self):
         is_numeric_xml = ""
@@ -217,18 +217,19 @@ class FreeTextAnswer(object):
             length_xml = FreeTextAnswer.FREETEXTANSWER_LENGTH_XML_TEMPLATE % (min_length_attr, max_length_attr)
 
         regex_xml = ""
-        if self.format_regex:
-            format_regex_attribs = '''regex="%s"''' % self.format_regex['regex']
+        for format_regex in self.format_regexps:
+            if self.format_regex:
+                format_regex_attribs = '''regex="%s"''' % format_regex['regex']
 
-            error_text = self.format_regex.get('error_text', None)
-            if error_text:
-                format_regex_attribs += ' errorText="%s"' % error_text
+                error_text = format_regex.get('error_text', None)
+                if error_text:
+                    format_regex_attribs += ' errorText="%s"' % error_text
 
-            flags = self.format_regex.get('flags', None)
-            if flags:
-                format_regex_attribs += ' flags="%s"' % flags
+                flags = format_regex.get('flags', None)
+                if flags:
+                    format_regex_attribs += ' flags="%s"' % flags
 
-            regex_xml = """<AnswerFormatRegex %s/>""" % format_regex_attribs
+                regex_xml += """<AnswerFormatRegex %s/>""" % format_regex_attribs
             
         constraints_xml = ""
         if is_numeric_xml or length_xml or regex_xml:

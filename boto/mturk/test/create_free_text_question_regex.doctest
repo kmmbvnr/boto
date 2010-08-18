@@ -10,9 +10,9 @@
 ...                              text='What is a boto no hit type?')
 
 # create a free text answer that is not quite so free!
->>> ft_answer = FreeTextAnswer(format_regex=dict(regex="^[12][0-9]{3}-[01]?\d-[0-3]?\d$",
-...                                              error_text="You must enter a date with the format yyyy-mm-dd.",
-...                                              flags="i"),
+>>> ft_answer = FreeTextAnswer(format_regexps=[dict(regex="^[12][0-9]{3}-[01]?\d-[0-3]?\d$",
+...                                                 error_text="You must enter a date with the format yyyy-mm-dd.",
+...                                                 flags="i")],
 ...                            default="This is not a valid format")
 
 # create the question specification
