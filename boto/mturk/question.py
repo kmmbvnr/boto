@@ -217,7 +217,7 @@ class FreeTextAnswer(object):
             length_xml = FreeTextAnswer.FREETEXTANSWER_LENGTH_XML_TEMPLATE % (min_length_attr, max_length_attr)
 
         regex_xml = ""
-        for format_regex in self.format_regexps:
+        for format_regex in self.format_regexps or []:
             if self.format_regex:
                 format_regex_attribs = '''regex="%s"''' % format_regex['regex']
 
